@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>mocha test</title>
+
+	<!-- Mocha -->
+	<link rel="stylesheet" href="libs/mocha/mocha.css">
+	<script src="libs/mocha/mocha.js"></script>
+	<script>mocha.setup('bdd'); //设置单元测试模式为BDD模式 </script>
+
+	<!-- Chai -->
+	<script src="libs/chai.js"></script>
+	<script>chai.Should(); //设置断言模式为 Should模式 </script>
+
+
+</head>
+
+<body>
+
+	<div id="mocha"></div>
+
+	<!-- 测试用例 -->
+	<script src="tests/commonSpec.js "></script>
+
+	<script>
+		setTimeout(function(){
+			mocha.run();
+		}, 1000);
+	</script>
+
+</body>
+</html>
