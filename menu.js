@@ -1,63 +1,91 @@
 // (function($){
 
-
-
-
-
 var Menu = function(config){
 	this.init(config);
 }
 
 Menu.prototype = {
 	init: function(config){
-		this.$config = $.extend({}, {
+		var c = this.$config = $.extend({}, {
 			target: $('body')
 		}, config);
 
-		this.load();
+		this.load('data/account.json');
+
 	},
-	load: function(){
+	build: function(data){
+		var c = this.$config;
+		var target = c.target;
+
+		var item = this.buildItem(data, 0)
+		target.append(item);
+
+		target.find('i').on('click', this, this.eventToggleMenu);
+	},
+	buildItem: function(data,level, index, noSub){
 		var self = this;
-		$.get('data/menu.json', function(data){
+		var uri = ["#manager/account/", "#manager/plan/", "#manager/unit/"];
+
+		var zone = ['<ul level="'+level+'" data-i="'+index+'" >'];
+
+
+		$.each(data, function(index,item){
+
+			zone.push(
+				'<li data-i="'+item.id+'" class="title" level="'+level+'">',
+				noSub ? '':'<i></i>' ,
+				'<a class="uk-text-truncate" href="'+uri[level]+item.id+'">' + item.name + '</a>',
+				'</li>'
+			);
+		});
+		zone.push('</ul>');
+
+		return zone.join('');
+	},
+	load: function(url){
+		var self = this;
+		$.get(url, function(data){
 			data = $.parseJSON(data);
 			self.build(data);
 		});
 	},
-	build: function(data){
-		console.log(data)
-		var c = this.$config;
-		var zone = this.buildItem(data, 0)
-		c.target.append(zone);
-		c.target.find('i').on('click',this.eventToggleMenu);
-	},
-	buildItem: function(menu,level, index){
+	loadSub: function(url, target, level, index, noSub){
 		var self = this;
-		var uri = ["#manager/account/", "#manager/plan/", "#manager/unit/"];
+		$.get(url, function(data){
+			data = $.parseJSON(data);
+			var sub = self.buildItem(data, level, index, noSub);
+			target.after(sub);
 
-		var zone = ['<div class="indent" data-id="'+index+'">'];
+			sub = target.siblings('ul[data-i="'+index+'"]');
+			sub.find('i').on('click', self, self.eventToggleMenu);
 
-
-		$.each(menu, function(index,item){
-
-			// 是否有子菜单
-			var hasSub = item.menu && item.menu.length;
-
-			zone.push(
-				hasSub ? '<i data-id="'+index+'"></i>' : '',
-				'<a class="uk-text-truncate" href="'+uri[level]+item.id+'">' + item.text + '</a>',
-				hasSub ? self.buildItem(item.menu, level+1, index) : ''
-
-			);
 		});
-		zone.push('</div>');
-
-		return zone.join('');
 	},
-	eventToggleMenu: function(ev, el) {
-		var el = $(this);
-		var id = el.attr('data-id');
-		el.siblings('div[data-id='+id+']').toggle();
-		el.toggleClass('act');
+	eventToggleMenu: function(ev) {
+		var self = ev.data;
+		var arrow = $(this);
+		var isExpand = arrow.hasClass('unfold');
+
+		var item = $(this).parent();
+		var i = +item.attr('data-i');
+		var level = +item.attr('level');
+
+		var sub = item.siblings('ul[data-i="'+i+'"]');
+		if(!isExpand){
+			if(!sub.length){
+				var url = (level == 0) ? 'data/plan.json' : 'data/unit.json';
+				var noSub = (level == 1) ? true: false;
+				self.loadSub(url, item, level+1, i, noSub);
+
+			}else{
+				sub.show();
+			}
+		}else{
+			sub.hide();
+		}
+
+		arrow.toggleClass('unfold');
+
 		return false;
 	}
 };
