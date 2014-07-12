@@ -3,154 +3,32 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Tree menu</title>
+
+	<link rel="stylesheet" type="text/css" href="main.css">
+
 </head>
 <body>
-	<style>
 
-	.wrapper{
-		background: #2A2E32;
-		margin: 10px auto;
-		border-radius: 5px;
-		box-shadow: rgba(0, 0, 0, 0.3) 0 0.3em 0.5em;
-		float: left;
-		width: 220px;
-		color: #7A7979;
-		padding: 10px;
-	}
 
-		a{
-			color: #FFF;
-			text-decoration: none;
-			display: block;
-			padding: 5px 0 5px 5px;
-		}
-		a:hover{
-			background-color: #6ab338;
-		}
-		i{
-			float: left;
-			cursor: pointer;
-			margin-top: 10px;
-			width: 0;
-			height: 0;
-			border-top: 5px solid transparent;
-			border-bottom: 5px solid transparent;
-			border-left: 5px solid #fff;
-			margin-right: 7px;
-
-		}
-		i.act{
-			width: 0;
-			height: 0;
-			border-left: 5px solid transparent;
-			border-right: 5px solid transparent;
-			border-top: 5px solid #fff;
-		}
-		.indent{
-			margin-left: 30px;
-		}
-	</style>
-
-	<div class="wrapper"></div>
+	<div id="menu" class="wrapper"></div>
 
 
 
-	<script src="jq.js"></script>
+	<script src="libs/seajs/sea.js"></script>
 	<script>
+		// seajs 的简单配置
+		seajs.config({
+			// base: "../sea-modules/",
+			alias: {
+				"jquery": "./libs/jquery-1.8.3.min.js"
+			}
+		})
 
-	var menu = [
-		{
-			"id":1,
-			"text": "帐号名A",
-			"menu":[
-				{
-					"id":1111,
-					"text": "计划AA1",
-					"menu":[
-						{
-							"id":10001020,
-							"text": "单元AAAA1"
-						},
-						{
-							"id":10001021,
-							"text": "单元AAAA2"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id":2,
-			"text": "帐号名B",
-			"menu":[
-				{
-					"id":1112,
-					"text": "计划BB1",
-					"menu":[
-						{
-							"id":10001020,
-							"text": "单元AAAA1"
-						},
-						{
-							"id":10001021,
-							"text": "单元AAAA2"
-						}
-					]
-				},
-				{
-					"id":1113,
-					"text": "计划B2",
-					"menu":[
-						{
-							"id":100012,
-							"text": "单元AAAA1"
-						},
-						{
-							"id":100012,
-							"text": "单元AAAA2"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id":3,
-			"text": "帐号名c",
-			"menu":[]
-		}
-	];
-
-
-	$('div').html(buildItem(menu, 0));
-	$('div').find('i').on('click',eventToggleMenu);
-
-	// 创建动态菜单
-	function buildItem (menu,level, index) {
-		var self = this;
-		var uri = ["#manager/account/", "#manager/plan/", "#manager/unit/"];
-
-		var zone = ['<div class="indent" data-id="'+index+'">'];
-		$.each(menu, function(index,item){
-			// 是否有子菜单
-			var hasSub = item.menu && item.menu.length;
-			zone.push(
-				hasSub ? '<i data-id="'+index+'"></i>' : '',
-				'<a class="uk-text-truncate" href="'+uri[level]+item.id+'">' + item.text + '</a>',
-				hasSub ? self.buildItem(item.menu, level+1, index) : ''
-			);
-		});
-		zone.push('</div>');
-
-		return zone.join('');
-	}
-	function eventToggleMenu (ev, el) {
-		var el = $(this);
-		var id = el.attr('data-id');
-		el.siblings('div[data-id='+id+']').toggle();
-		el.toggleClass('act');
-		return false;
-	}
+		// 加载入口模块
+		seajs.use("./init");
 
 	</script>
+
+
 </body>
 </html>
