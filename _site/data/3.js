@@ -1,4 +1,4 @@
-[
+var level3 = [
 {
 	"id":30,
 	"name": "aaa"
