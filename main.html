@@ -13,8 +13,21 @@
 	<div id="menu" class="wrapper"></div>
 
 
-	<script src="libs/jQuery-1.9.1.js"></script>
-	<script src="menu.js"></script>
+
+	<script src="libs/seajs/sea.js"></script>
+	<script>
+		// seajs 的简单配置
+		seajs.config({
+			// base: "../sea-modules/",
+			alias: {
+				"jquery": "./libs/jquery-1.8.3.min.js"
+			}
+		})
+
+		// 加载入口模块
+		seajs.use("./init");
+
+	</script>
 
 
 </body>

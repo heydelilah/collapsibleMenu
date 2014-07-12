@@ -20,13 +20,27 @@
 
 	<div id="mocha"></div>
 
-	<!-- 测试用例 -->
-	<script src="tests/commonSpec.js "></script>
+	<div id="menu"></div>
 
+	<script src="libs/seajs/sea.js"></script>
 	<script>
-		setTimeout(function(){
+
+		var host = window.location.host;
+		console.log(host)
+
+		// seajs 的简单配置
+		seajs.config({
+			base: host,
+			alias: {
+				"jquery": "/libs/jquery-1.8.3.min.js"
+			}
+		})
+
+		// 测试用例
+		seajs.use(['./tests/main'], function(){
 			mocha.run();
-		}, 1000);
+		})
+
 	</script>
 
 </body>
