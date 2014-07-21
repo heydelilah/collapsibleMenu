@@ -8,9 +8,9 @@ app.listen(8099);
 
 function handler (req, res) {
 	var pathname = url.parse(req.url).pathname;
-	pathname = (pathname=='/') ? '/main.html' : pathname;
+	pathname = (pathname=='/') ? 'main.html' : pathname;
 
-	fs.readFile(__dirname +pathname,
+	fs.readFile(__dirname +'/'+pathname,
 	function (err, data) {
 		if (err) {
 			res.writeHead(500);

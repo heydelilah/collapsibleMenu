@@ -9,11 +9,11 @@ define(function(require, exports, module) {
 	Menu.prototype = {
 		init: function(config){
 			var c = this.$config = $.extend({}, {
-				target: $('body')
+				target: $('body'),
+				url: 'data/account.json'
 			}, config);
 
-			this.load('data/account.json');
-
+			this.load(c.url);
 		},
 		build: function(data){
 			var c = this.$config;

@@ -13,6 +13,8 @@
 	<script src="libs/chai.js"></script>
 	<script>chai.Should(); //设置断言模式为 Should模式 </script>
 
+	<script src="libs/sinon-1.10.3.js"></script>
+
 
 </head>
 
@@ -24,7 +26,6 @@
 
 	<script src="libs/seajs/sea.js"></script>
 	<script>
-
 		var host = window.location.host;
 		console.log(host)
 
@@ -33,6 +34,7 @@
 			base: host,
 			alias: {
 				"jquery": "/libs/jquery-1.8.3.min.js"
+				// "sinon": "/libs/sinon-1.10.3.js"
 			}
 		})
 
