@@ -6,7 +6,8 @@ define(function(require, exports, module) {
 	var menu = require('./menu');
 
 	var menu = new menu.main({
-		target: $('#menu')
+		target: $('#menu'),
+		url: 'data/menu.json'
 	});
 
 

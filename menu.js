@@ -9,15 +9,21 @@ define(function(require, exports, module) {
 	Menu.prototype = {
 		init: function(config){
 			var c = this.$config = $.extend({}, {
-				target: $('body'),
-				url: 'data/account.json'
+				url: '',
+				data: null,
+				target: $('body')
 			}, config);
 
-			this.load(c.url);
+			if(c.url){
+				this.load(c.url);
+			}
+
 		},
 		build: function(data){
 			var c = this.$config;
 			var target = c.target;
+
+			data = data || c.data;
 
 			var item = this.buildItem(data, 0)
 			target.append(item);
@@ -45,6 +51,7 @@ define(function(require, exports, module) {
 			return zone.join('');
 		},
 		load: function(url){
+			console.log('ssss')
 			var self = this;
 			$.get(url, function(data){
 				data = $.parseJSON(data);
