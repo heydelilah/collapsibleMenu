@@ -9,9 +9,10 @@ collapsibleMenu
 live demo: http://heydelilah.github.io/collapsibleMenu/
 
 
-Just for personal frontend learning
-
-1. try seajs
+Nothing but my personal review and summary.
+1. try Seajs
 2. try Unit Testing
-	mocha, chai, sinon
-3. nodejs as server
+	- Mocha
+	- Chai
+	- Sinon
+3. use Nodejs as server
