@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 
 	var menu = new menu.main({
 		target: $('#menu'),
-		url: 'data/menu.json'
+		url: 'data/account.json'
 	});
 
 

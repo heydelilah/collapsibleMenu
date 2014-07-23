@@ -14,19 +14,23 @@ define(function(require, exports, module) {
 				target: $('body')
 			}, config);
 
+			this.$el = null;
+
 			if(c.url){
 				this.load(c.url);
 			}
 
+			if(c.data){
+				this.build(c.data);
+			}
 		},
 		build: function(data){
 			var c = this.$config;
 			var target = c.target;
 
-			data = data || c.data;
+			this.$el = this.buildItem(data, 0);
 
-			var item = this.buildItem(data, 0)
-			target.append(item);
+			target.append(this.$el);
 
 			target.find('i').on('click', this, this.eventToggleMenu);
 		},
@@ -48,10 +52,9 @@ define(function(require, exports, module) {
 			});
 			zone.push('</ul>');
 
-			return zone.join('');
+			return $(zone.join(''));
 		},
 		load: function(url){
-			console.log('ssss')
 			var self = this;
 			$.get(url, function(data){
 				data = $.parseJSON(data);
